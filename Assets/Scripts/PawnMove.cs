@@ -27,6 +27,16 @@ public class PawnMove : MonoBehaviour
                     if (clickedTransform.tag != "Untagged")
                     {
                         Debug.Log(clickedTransform.name + " " + clickedTransform.tag);
+
+                        if (clickedTransform.tag == "Pawn")
+                        {
+                            Pawn pawn = clickedTransform.GetComponent<Pawn>();
+                            Transform pawnActualCase = pawn.currentCaseLocation;
+
+
+                            clickedTransform.position = clickedTransform.position + new Vector3(1f, 0f, 0f);
+                            pawn.CheckCaseLocation();
+                        }
                     }
                     //CurrentClickedGameObject(raycastHit.transform.gameObject);
                 }

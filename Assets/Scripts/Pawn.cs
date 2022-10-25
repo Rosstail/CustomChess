@@ -5,12 +5,23 @@ using UnityEngine;
 public class Pawn : MonoBehaviour
 {
 
-    Transform currentCaseLocation;
+    public Transform currentCaseLocation;
     [SerializeField] public List<Vector2> movements;
 
 
     // Start is called before the first frame update
     void Start()
+    {
+        CheckCaseLocation();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void CheckCaseLocation()
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, -Vector3.up, out hit, 100f))
@@ -23,11 +34,5 @@ public class Pawn : MonoBehaviour
                 Debug.Log(transform.name + " Current location is " + currentCaseLocation.name);
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
