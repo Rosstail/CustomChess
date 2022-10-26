@@ -8,16 +8,16 @@ public class ChessCase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CheckPawnTransform();
+        CheckPieceTransform();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        CheckPieceTransform();
     }
 
-    public void CheckPawnTransform()
+    public void CheckPieceTransform()
     {
         Transform newPiece = null;
         RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.up, 100f);
@@ -26,6 +26,7 @@ public class ChessCase : MonoBehaviour
             RaycastHit hit = hits[i];
             Transform raycastTransform = hit.transform;
 
+            Debug.DrawLine(transform.position, raycastTransform.position, Color.magenta);
             if (raycastTransform.gameObject.activeSelf && raycastTransform.tag == "Piece")
             {
                 newPiece = raycastTransform;
