@@ -5,8 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Case
-  - pawn
-  - Pawn
+  - Piece
   layers:
   - Default
   - TransparentFX
@@ -15,7 +14,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - Piece
   - 
   - 
   - 

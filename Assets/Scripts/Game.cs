@@ -6,7 +6,7 @@ public class Game : MonoBehaviour
 {
 
     public int turn = 0;
-    public string whoPlays = "light";
+    public string whoPlays = "lights";
     [SerializeField] public GameObject lightPawns;
     [SerializeField] public GameObject darkPawns;
 
