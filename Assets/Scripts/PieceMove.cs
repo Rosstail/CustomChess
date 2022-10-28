@@ -10,10 +10,12 @@ public class PieceMove : MonoBehaviour
     public Transform selectedCaseTransform;
     public Transform targetedCaseTransform;
     public int layerMask = ~(1 << 7);
+    private Game game;
 
     // Start is called before the first frame update
     void Start()
     {
+        game = GetComponent<Game>();
     }
 
     // Update is called once per frame
@@ -48,7 +50,8 @@ public class PieceMove : MonoBehaviour
             selectedCaseTransform = chessCaseTransform;
         } else
         {
-            if (selectedCaseTransform == chessCaseTransform)
+            Piece currentPiece = selectedCaseTransform.GetComponent<ChessCase>().currentPiece.GetComponent<Piece>();
+            if (selectedCaseTransform == chessCaseTransform || currentPiece.team != game.whoPlays)
             {
                 Unselect();
                 return;
@@ -291,6 +294,7 @@ public class PieceMove : MonoBehaviour
         Vector3 startPosition = selectedChessCase.currentPiece.position;
         Vector3 destination = new Vector3(targetedCaseTransform.position.x, startPosition.y, targetedCaseTransform.position.z);
         selectedPiece.agent.SetDestination(destination);
+        game.SwitchTeam();
     }
 
     void AttackPiece()

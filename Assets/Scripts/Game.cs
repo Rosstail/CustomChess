@@ -25,4 +25,15 @@ public class Game : MonoBehaviour
     {
 
     }
+
+    public void SwitchTeam()
+    {
+        if (whoPlays == "lights")
+        {
+            whoPlays = "darks";
+        } else
+        {
+            whoPlays = "lights";
+        }
+    }
 }
