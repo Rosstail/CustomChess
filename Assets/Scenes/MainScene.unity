@@ -2964,6 +2964,9 @@ MonoBehaviour:
   selectedCaseTransform: {fileID: 0}
   targetedCaseTransform: {fileID: 0}
   layerMask: -129
+  selectedPieceMaterial: {fileID: 2100000, guid: 6d002a1f6b8f6a0488f847078b8879d7, type: 2}
+  possibleMoveMaterial: {fileID: 2100000, guid: 260687e6bce28ee41ab79c3ee18e68d9, type: 2}
+  possibleAttackMaterial: {fileID: 2100000, guid: cfc5dfe979c120348bc11fa820601a8b, type: 2}
 --- !u!1 &777121713
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,9 +5,13 @@ using UnityEngine;
 public class ChessCase : MonoBehaviour
 {
     public Transform currentPiece;
+    private Renderer renderer;
+    private Material defaultMaterial;
     // Start is called before the first frame update
     void Start()
     {
+        renderer = GetComponent<Renderer>();
+        defaultMaterial = renderer.material;
         CheckPieceTransform();
     }
 
@@ -35,5 +39,15 @@ public class ChessCase : MonoBehaviour
         }
 
         currentPiece = newPiece;
+    }
+
+    public void setMaterial(Material material)
+    {
+        renderer.material = material;
+    }
+
+    public void resetMaterial()
+    {
+        renderer.material = defaultMaterial;
     }
 }

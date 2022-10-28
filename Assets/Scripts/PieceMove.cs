@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TestTools;
 using UnityEngine.UIElements;
 
 public class PieceMove : MonoBehaviour
@@ -11,6 +12,13 @@ public class PieceMove : MonoBehaviour
     public Transform targetedCaseTransform;
     public int layerMask = ~(1 << 7);
     private Game game;
+    
+    List<Transform> possibleMoves = new List<Transform>();
+    List<Transform> possibleAttacks = new List<Transform>();
+
+    [SerializeField] public Material selectedPieceMaterial;
+    [SerializeField] public Material possibleMoveMaterial;
+    [SerializeField] public Material possibleAttackMaterial;
 
     // Start is called before the first frame update
     void Start()
@@ -48,12 +56,16 @@ public class PieceMove : MonoBehaviour
             }
 
             selectedCaseTransform = chessCaseTransform;
+
+            chessCase.setMaterial(selectedPieceMaterial);
+            CheckPossibleMoves();
+            CheckPossibleAttacks();
         } else
         {
             Piece currentPiece = selectedCaseTransform.GetComponent<ChessCase>().currentPiece.GetComponent<Piece>();
             if (selectedCaseTransform == chessCaseTransform || currentPiece.team != game.whoPlays)
             {
-                Unselect();
+                UnselectAll();
                 return;
             }
 
@@ -76,37 +88,42 @@ public class PieceMove : MonoBehaviour
 
     void TryMovePiece()
     {
-        if (!CheckMove())
+        if (!possibleMoves.Contains(targetedCaseTransform))
         {
-            targetedCaseTransform = null;
+            UnselectTarget();
             return;
         }
         MovePiece();
-        ChessCase selectedChessCase = selectedCaseTransform.GetComponent<ChessCase>();
-        ChessCase targetedChessCase = targetedCaseTransform.GetComponent<ChessCase>();
-        selectedChessCase.CheckPieceTransform();
-        targetedChessCase.CheckPieceTransform();
-        Unselect();
+        UnselectAll();
     }
 
-    bool CheckMove()
+    void CheckPossibleMoves()
     {
         foreach (Transform moveRange in GetMoveCase())
         {
-            if (targetedCaseTransform == moveRange && CheckObstacle())
+            if (CheckObstacle(moveRange))
             {
-                return true;
+                ChessCase possibleChessCase = moveRange.GetComponent<ChessCase>();
+                if (possibleChessCase.currentPiece == null)
+                {
+                    possibleMoves.Add(moveRange);
+                    possibleChessCase.setMaterial(possibleMoveMaterial);
+                }
             }
         }
 
         foreach (Transform moveRange in GetMoveInfinite())
         {
-            if (targetedCaseTransform == moveRange && CheckObstacle())
+            if (CheckObstacle(moveRange))
             {
-                return true;
+                ChessCase possibleChessCase = moveRange.GetComponent<ChessCase>();
+                if (possibleChessCase.currentPiece == null)
+                {
+                    possibleMoves.Add(moveRange);
+                    possibleChessCase.setMaterial(possibleMoveMaterial);
+                }
             }
         }
-        return false;
     }
     List<Transform> GetMoveCase()
     {
@@ -191,35 +208,52 @@ public class PieceMove : MonoBehaviour
         Piece selectedPiece = selectedChessCase.currentPiece.GetComponent<Piece>();
         Piece targetPiece = targetedChessCase.currentPiece.GetComponent<Piece>();
 
-        if (selectedPiece.team == targetPiece.team || !CheckAttackMove())
+        if (selectedPiece.team == targetPiece.team || !possibleAttacks.Contains(targetedCaseTransform))
         {
-            targetedCaseTransform = null;
+            UnselectTarget();
             return;
         }
         AttackPiece();
         selectedChessCase.CheckPieceTransform();
         targetedChessCase.CheckPieceTransform();
-        Unselect();
+        UnselectAll();
     }
 
-    bool CheckAttackMove()
+    void CheckPossibleAttacks()
     {
         foreach (Transform attackRange in GetAttackCase())
         {
-            if (targetedCaseTransform == attackRange && CheckObstacle())
+            ChessCase selectedChessCase = selectedCaseTransform.GetComponent<ChessCase>();
+            ChessCase possibleChessCase = attackRange.GetComponent<ChessCase>();
+            Piece selectedPiece = selectedChessCase.currentPiece.GetComponent<Piece>();
+
+            if (possibleChessCase.currentPiece != null)
             {
-                return true;
+                Piece possiblePiece = possibleChessCase.currentPiece.GetComponent<Piece>();
+                if (CheckObstacle(attackRange) && possiblePiece.team != selectedPiece.team)
+                {
+                    possibleAttacks.Add(attackRange);
+                    possibleChessCase.setMaterial(possibleAttackMaterial);
+                }
             }
         }
 
-        foreach (Transform attackRange in GetMoveInfinite())
+        foreach (Transform attackRange in GetAttackInfinite())
         {
-            if (targetedCaseTransform == attackRange && CheckObstacle())
+            ChessCase selectedChessCase = selectedCaseTransform.GetComponent<ChessCase>();
+            ChessCase possibleChessCase = attackRange.GetComponent<ChessCase>();
+            Piece selectedPiece = selectedChessCase.currentPiece.GetComponent<Piece>();
+
+            if (possibleChessCase.currentPiece != null)
             {
-                return true;
+                Piece possiblePiece = possibleChessCase.currentPiece.GetComponent<Piece>();
+                if (CheckObstacle(attackRange) && possiblePiece.team != selectedPiece.team)
+                {
+                    possibleAttacks.Add(attackRange);
+                    possibleChessCase.setMaterial(possibleAttackMaterial);
+                }
             }
         }
-        return false;
     }
     List<Transform> GetAttackCase()
     {
@@ -252,7 +286,52 @@ public class PieceMove : MonoBehaviour
         return ranges;
     }
 
-    bool CheckObstacle()
+    List<Transform> GetAttackInfinite()
+    {
+        List<Transform> ranges = new List<Transform>();
+        Transform currentPiece = selectedCaseTransform.GetComponent<ChessCase>().currentPiece;
+        Piece selectedPiece = currentPiece.GetComponent<Piece>();
+        for (int i = 0; i < selectedPiece.infiniteAttacks.Count; i++)
+        {
+            Vector2 infiniteAttackValue = selectedPiece.infiniteMovements[i];
+            int multiplier = 1;
+
+            if (currentPiece.localEulerAngles.y == 180)
+            {
+                infiniteAttackValue.x = -infiniteAttackValue.x;
+            }
+
+            while (true)
+            {
+                Vector3 movementPos = selectedCaseTransform.position;
+                int caseCounter = 0;
+                {
+                    movementPos.x = movementPos.x + infiniteAttackValue.x * multiplier;
+                    movementPos.z = movementPos.z + infiniteAttackValue.y * multiplier;
+
+                    Collider[] hitColliders = Physics.OverlapSphere(movementPos, 0.1f, layerMask);
+                    foreach (var hitCollider in hitColliders)
+                    {
+                        if (hitCollider.tag == "Case")
+                        {
+                            ranges.Add(hitCollider.transform);
+                            caseCounter++;
+                        }
+                    }
+                }
+                multiplier++;
+                if (caseCounter == 0)
+                {
+                    break;
+                }
+            }
+        }
+
+        return ranges;
+
+    }
+
+    bool CheckObstacle(Transform targetTransform)
     {
         Transform currentPiece = selectedCaseTransform.GetComponent<ChessCase>().currentPiece;
         Piece selectedPiece = currentPiece.GetComponent<Piece>();
@@ -261,7 +340,7 @@ public class PieceMove : MonoBehaviour
             return true;
         }
 
-        Vector3 direction = targetedCaseTransform.position - selectedCaseTransform.position;
+        Vector3 direction = targetTransform.position - selectedCaseTransform.position;
         RaycastHit[] hits = Physics.RaycastAll(selectedCaseTransform.position, direction);
         for (int i = 0; i < hits.Length; i++)
         {
@@ -269,7 +348,7 @@ public class PieceMove : MonoBehaviour
             ChessCase chessCase = hit.transform.GetComponent<ChessCase>();
             if (hit.transform != selectedCaseTransform)
             {
-                if (hit.transform == targetedCaseTransform)
+                if (hit.transform == targetTransform)
                 {
                     return true;
                 }
@@ -310,10 +389,44 @@ public class PieceMove : MonoBehaviour
         return selectedCaseTransform != null;
     }
 
-    private void Unselect()
+    private void UnselectAll()
     {
-        selectedCaseTransform = null;
-        targetedCaseTransform = null;
+        UnselectFirst();
+        UnselectTarget();
+    }
+
+    void UnselectFirst()
+    {
+        if (selectedCaseTransform != null)
+        {
+            ChessCase selectedChessCase = selectedCaseTransform.GetComponent<ChessCase>();
+            selectedChessCase.resetMaterial();
+            selectedCaseTransform = null;
+        }
+
+        foreach (Transform move in possibleMoves)
+        {
+            ChessCase chessCase = move.GetComponent<ChessCase>();
+            chessCase.resetMaterial();
+        }
+        possibleMoves = new List<Transform>();
+    }
+
+    void UnselectTarget()
+    {
+        if (targetedCaseTransform != null)
+        {
+            ChessCase targetChessCase = targetedCaseTransform.GetComponent<ChessCase>();
+            targetChessCase.resetMaterial();
+            targetedCaseTransform = null;
+        }
+
+        foreach (Transform attacks in possibleAttacks)
+        {
+            ChessCase chessCase = attacks.GetComponent<ChessCase>();
+            chessCase.resetMaterial();
+        }
+        possibleAttacks = new List<Transform>();
     }
 
 }
