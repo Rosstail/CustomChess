@@ -79,6 +79,11 @@ public class PieceMove : MonoBehaviour
             return;
         }
         MovePiece();
+        ChessCase selectedChessCase = selectedCaseTransform.GetComponent<ChessCase>();
+        ChessCase targetedChessCase = targetedCaseTransform.GetComponent<ChessCase>();
+        selectedChessCase.CheckPieceTransform();
+        targetedChessCase.CheckPieceTransform();
+        Unselect();
     }
 
     bool CheckMove()
@@ -189,6 +194,9 @@ public class PieceMove : MonoBehaviour
             return;
         }
         AttackPiece();
+        selectedChessCase.CheckPieceTransform();
+        targetedChessCase.CheckPieceTransform();
+        Unselect();
     }
 
     bool CheckAttackMove()
@@ -277,22 +285,20 @@ public class PieceMove : MonoBehaviour
     {
         ChessCase selectedChessCase = selectedCaseTransform.GetComponent<ChessCase>();
         ChessCase targetedChessCase = targetedCaseTransform.GetComponent<ChessCase>();
-        selectedChessCase.currentPiece.position = new Vector3(targetedCaseTransform.position.x, selectedChessCase.currentPiece.position.y, targetedCaseTransform.position.z);
-        selectedChessCase.CheckPieceTransform();
-        targetedChessCase.CheckPieceTransform();
-        Unselect();
+        Transform selectedPieceTransform = selectedChessCase.currentPiece;
+        Piece selectedPiece = selectedPieceTransform.GetComponent<Piece>();
+
+        Vector3 startPosition = selectedChessCase.currentPiece.position;
+        Vector3 destination = new Vector3(targetedCaseTransform.position.x, startPosition.y, targetedCaseTransform.position.z);
+        selectedPiece.agent.SetDestination(destination);
     }
 
     void AttackPiece()
     {
-        ChessCase selectedChessCase = selectedCaseTransform.GetComponent<ChessCase>();
+        MovePiece();
         ChessCase targetedChessCase = targetedCaseTransform.GetComponent<ChessCase>();
         Piece targetPiece = targetedChessCase.currentPiece.GetComponent<Piece>();
-        selectedChessCase.currentPiece.position = targetedChessCase.currentPiece.position;
         targetPiece.Taken();
-        selectedChessCase.CheckPieceTransform();
-        targetedChessCase.CheckPieceTransform();
-        Unselect();
     }
 
     private bool IsSelected()
