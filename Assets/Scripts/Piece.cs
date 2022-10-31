@@ -10,6 +10,7 @@ public class Piece : MonoBehaviour
     [SerializeField] public List<Vector2> infiniteMovements;
     [SerializeField] public List<Vector2> infiniteAttacks;
     [SerializeField] public bool canJumpPieces = false;
+    [SerializeField] public bool canRisk = true;
     [SerializeField] public string team = "lights";
     public NavMeshAgent agent;
 
