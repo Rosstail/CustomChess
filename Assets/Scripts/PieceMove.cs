@@ -324,8 +324,6 @@ public class PieceMove : MonoBehaviour
 
         distances.Sort();
 
-        Debug.Log(selectedCaseTransform.name + " -> " + targetTransform.name + " " + distances.Count);
-
         int distanceIndex = 0;
 
         while (distanceIndex < distances.Count)
@@ -353,8 +351,7 @@ public class PieceMove : MonoBehaviour
 
             }
         }
-        
-        Debug.Log("Nb check " + distanceIndex);
+
         return true;
     }
 
