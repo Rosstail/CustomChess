@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-
     public int turn = 0;
     public string whoPlays = "lights";
     [SerializeField] public GameObject lightPawns;
@@ -26,6 +25,16 @@ public class Game : MonoBehaviour
 
     }
 
+    public void CheckGameStatus()
+    {
+        if (lightPawnsCount == 0)
+        {
+            Victory("darks");
+        } else if (darkPawnsCount == 0)
+        {
+            Victory("lights");
+        }
+    }
     public void SwitchTeam()
     {
         if (whoPlays == "lights")
@@ -35,5 +44,11 @@ public class Game : MonoBehaviour
         {
             whoPlays = "lights";
         }
+    }
+
+    public void Victory(string teamName)
+    {
+        Debug.Log(teamName + "  is victorious !");
+        whoPlays = null;
     }
 }

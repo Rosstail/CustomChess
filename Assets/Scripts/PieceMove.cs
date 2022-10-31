@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PieceMove : MonoBehaviour
@@ -143,11 +144,6 @@ public class PieceMove : MonoBehaviour
             Vector2 simpleMovement = selectedPiece.simpleMovements[i];
             Vector3 movePos = selectedCaseTransform.position;
 
-            if (selectedPiece.transform.localEulerAngles.y == 180)
-            {
-                simpleMovement.x = -simpleMovement.x;
-            }
-
             movePos.x = movePos.x + simpleMovement.x;
             movePos.z = movePos.z + simpleMovement.y;
 
@@ -171,11 +167,6 @@ public class PieceMove : MonoBehaviour
         {
             Vector2 infiniteMovementValue = selectedPiece.infiniteMovements[i];
             int multiplier = 1;
-
-            if (selectedPiece.transform.localEulerAngles.y == 180)
-            {
-                infiniteMovementValue.x = -infiniteMovementValue.x;
-            }
 
             while (true)
             {
@@ -260,11 +251,6 @@ public class PieceMove : MonoBehaviour
             Vector2 simpleAttack = selectedPiece.simpleAttacks[i];
             Vector3 attackPos = selectedCaseTransform.position;
 
-            if (selectedPiece.transform.localEulerAngles.y == 180)
-            {
-                simpleAttack.x = -simpleAttack.x;
-            }
-
             attackPos.x = attackPos.x + simpleAttack.x;
             attackPos.z = attackPos.z + simpleAttack.y;
 
@@ -288,11 +274,6 @@ public class PieceMove : MonoBehaviour
         {
             Vector2 infiniteAttackValue = selectedPiece.infiniteMovements[i];
             int multiplier = 1;
-
-            if (selectedPiece.transform.localEulerAngles.y == 180)
-            {
-                infiniteAttackValue.x = -infiniteAttackValue.x;
-            }
 
             while (true)
             {
@@ -333,6 +314,7 @@ public class PieceMove : MonoBehaviour
 
         Vector3 direction = targetTransform.position - selectedCaseTransform.position;
         RaycastHit[] hits = Physics.RaycastAll(selectedCaseTransform.position, direction);
+
         List<float> distances = new List<float>();
 
         for (int hitIndex = 0; hitIndex < hits.Length; hitIndex++)
@@ -342,32 +324,37 @@ public class PieceMove : MonoBehaviour
 
         distances.Sort();
 
+        Debug.Log(selectedCaseTransform.name + " -> " + targetTransform.name + " " + distances.Count);
+
         int distanceIndex = 0;
 
-        for (int hitIndex = 0; hitIndex < hits.Length; hitIndex++)
+        while (distanceIndex < distances.Count)
         {
-            RaycastHit hit = hits[hitIndex];
-            if (hit.distance == distances[distanceIndex])
+            for (int hitIndex = 0; hitIndex < hits.Length; hitIndex++)
             {
-                ChessCase chessCase = hit.transform.GetComponent<ChessCase>();
-                if (hit.transform != selectedCaseTransform)
+                RaycastHit hit = hits[hitIndex];
+                if (hit.distance == distances[distanceIndex])
                 {
-                    if (hit.transform == targetTransform)
+                    ChessCase chessCase = hit.transform.GetComponent<ChessCase>();
+                    if (hit.transform != selectedCaseTransform)
                     {
-                        return true;
+                        if (hit.transform == targetTransform)
+                        {
+                            return true;
+                        }
+                        if (chessCase.currentPiece != null)
+                        {
+                            return false;
+                        }
                     }
-                    if (chessCase.currentPiece != null)
-                    {
-                        return false;
-                    }
+
+                    distanceIndex++;
                 }
 
-                distanceIndex++;
-                hitIndex = 0;
             }
-
         }
-
+        
+        Debug.Log("Nb check " + distanceIndex);
         return true;
     }
 

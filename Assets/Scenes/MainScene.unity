@@ -309,10 +309,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simpleMovements:
-  - {x: 1, y: 0}
+  - {x: -1, y: 0}
   simpleAttacks:
-  - {x: 1, y: 1}
-  - {x: 1, y: -1}
+  - {x: -1, y: 1}
+  - {x: -1, y: -1}
   infiniteMovements: []
   infiniteAttacks: []
   canJumpPieces: 0
@@ -1468,10 +1468,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simpleMovements:
-  - {x: 1, y: 0}
+  - {x: -1, y: 0}
   simpleAttacks:
-  - {x: 1, y: 1}
-  - {x: 1, y: -1}
+  - {x: -1, y: 1}
+  - {x: -1, y: -1}
   infiniteMovements: []
   infiniteAttacks: []
   canJumpPieces: 0
