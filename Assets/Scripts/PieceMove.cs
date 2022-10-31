@@ -1,15 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TestTools;
-using UnityEngine.UIElements;
 
 public class PieceMove : MonoBehaviour
 {
     public Transform selectedCaseTransform;
     public Transform targetedCaseTransform;
+
+    public ChessCase selectedChessCase;
+    public ChessCase targetedChessCase;
+
+    public Piece selectedPiece;
+    public Piece targetedPiece;
+
     public int layerMask = ~(1 << 7);
     private Game game;
     
@@ -56,28 +60,34 @@ public class PieceMove : MonoBehaviour
             }
 
             selectedCaseTransform = chessCaseTransform;
+            selectedChessCase = chessCase;
+            selectedPiece = chessCase.currentPiece.GetComponent<Piece>();
 
             chessCase.setMaterial(selectedPieceMaterial);
             CheckPossibleMoves();
             CheckPossibleAttacks();
         } else
         {
-            Piece currentPiece = selectedCaseTransform.GetComponent<ChessCase>().currentPiece.GetComponent<Piece>();
-            if (selectedCaseTransform == chessCaseTransform || currentPiece.team != game.whoPlays)
+            if (selectedCaseTransform == chessCaseTransform || selectedPiece.team != game.whoPlays)
             {
                 UnselectAll();
                 return;
             }
 
             targetedCaseTransform = chessCaseTransform;
+            targetedChessCase = chessCase;
+            if (targetedChessCase.currentPiece != null)
+            {
+                targetedPiece = targetedChessCase.currentPiece.GetComponent<Piece>();
+            }
+
             TryActionPiece();
         }
     }
 
     void TryActionPiece()
     {
-        ChessCase targetChessCase = targetedCaseTransform.GetComponent<ChessCase>();
-        if (targetChessCase.currentPiece != null)
+        if (targetedChessCase.currentPiece != null)
         {
             TryAttackPiece();
         } else
@@ -128,14 +138,12 @@ public class PieceMove : MonoBehaviour
     List<Transform> GetMoveCase()
     {
         List<Transform> ranges = new List<Transform>();
-        Transform currentPiece = selectedCaseTransform.GetComponent<ChessCase>().currentPiece;
-        Piece selectedPiece = currentPiece.GetComponent<Piece>();
         for (int i = 0; i < selectedPiece.simpleMovements.Count; i++)
         {
             Vector2 simpleMovement = selectedPiece.simpleMovements[i];
             Vector3 movePos = selectedCaseTransform.position;
 
-            if (currentPiece.localEulerAngles.y == 180)
+            if (selectedPiece.transform.localEulerAngles.y == 180)
             {
                 simpleMovement.x = -simpleMovement.x;
             }
@@ -159,14 +167,12 @@ public class PieceMove : MonoBehaviour
     List<Transform> GetMoveInfinite()
     {
         List<Transform> ranges = new List<Transform>();
-        Transform currentPiece = selectedCaseTransform.GetComponent<ChessCase>().currentPiece;
-        Piece selectedPiece = currentPiece.GetComponent<Piece>();
         for (int i = 0; i < selectedPiece.infiniteMovements.Count; i++)
         {
             Vector2 infiniteMovementValue = selectedPiece.infiniteMovements[i];
             int multiplier = 1;
 
-            if (currentPiece.localEulerAngles.y == 180)
+            if (selectedPiece.transform.localEulerAngles.y == 180)
             {
                 infiniteMovementValue.x = -infiniteMovementValue.x;
             }
@@ -203,12 +209,7 @@ public class PieceMove : MonoBehaviour
 
     void TryAttackPiece()
     {
-        ChessCase selectedChessCase = selectedCaseTransform.GetComponent<ChessCase>();
-        ChessCase targetedChessCase = targetedCaseTransform.GetComponent<ChessCase>();
-        Piece selectedPiece = selectedChessCase.currentPiece.GetComponent<Piece>();
-        Piece targetPiece = targetedChessCase.currentPiece.GetComponent<Piece>();
-
-        if (selectedPiece.team == targetPiece.team || !possibleAttacks.Contains(targetedCaseTransform))
+        if (selectedPiece.team == targetedPiece.team || !possibleAttacks.Contains(targetedCaseTransform))
         {
             UnselectTarget();
             return;
@@ -223,9 +224,7 @@ public class PieceMove : MonoBehaviour
     {
         foreach (Transform attackRange in GetAttackCase())
         {
-            ChessCase selectedChessCase = selectedCaseTransform.GetComponent<ChessCase>();
             ChessCase possibleChessCase = attackRange.GetComponent<ChessCase>();
-            Piece selectedPiece = selectedChessCase.currentPiece.GetComponent<Piece>();
 
             if (possibleChessCase.currentPiece != null)
             {
@@ -240,9 +239,7 @@ public class PieceMove : MonoBehaviour
 
         foreach (Transform attackRange in GetAttackInfinite())
         {
-            ChessCase selectedChessCase = selectedCaseTransform.GetComponent<ChessCase>();
             ChessCase possibleChessCase = attackRange.GetComponent<ChessCase>();
-            Piece selectedPiece = selectedChessCase.currentPiece.GetComponent<Piece>();
 
             if (possibleChessCase.currentPiece != null)
             {
@@ -258,14 +255,12 @@ public class PieceMove : MonoBehaviour
     List<Transform> GetAttackCase()
     {
         List<Transform> ranges = new List<Transform>();
-        Transform currentPiece = selectedCaseTransform.GetComponent<ChessCase>().currentPiece;
-        Piece selectedPiece = currentPiece.GetComponent<Piece>();
         for (int i = 0; i < selectedPiece.simpleAttacks.Count; i++)
         {
             Vector2 simpleAttack = selectedPiece.simpleAttacks[i];
             Vector3 attackPos = selectedCaseTransform.position;
 
-            if (currentPiece.localEulerAngles.y == 180)
+            if (selectedPiece.transform.localEulerAngles.y == 180)
             {
                 simpleAttack.x = -simpleAttack.x;
             }
@@ -289,14 +284,12 @@ public class PieceMove : MonoBehaviour
     List<Transform> GetAttackInfinite()
     {
         List<Transform> ranges = new List<Transform>();
-        Transform currentPiece = selectedCaseTransform.GetComponent<ChessCase>().currentPiece;
-        Piece selectedPiece = currentPiece.GetComponent<Piece>();
         for (int i = 0; i < selectedPiece.infiniteAttacks.Count; i++)
         {
             Vector2 infiniteAttackValue = selectedPiece.infiniteMovements[i];
             int multiplier = 1;
 
-            if (currentPiece.localEulerAngles.y == 180)
+            if (selectedPiece.transform.localEulerAngles.y == 180)
             {
                 infiniteAttackValue.x = -infiniteAttackValue.x;
             }
@@ -333,8 +326,6 @@ public class PieceMove : MonoBehaviour
 
     bool CheckObstacle(Transform targetTransform)
     {
-        Transform currentPiece = selectedCaseTransform.GetComponent<ChessCase>().currentPiece;
-        Piece selectedPiece = currentPiece.GetComponent<Piece>();
         if (selectedPiece.canJumpPieces)
         {
             return true;
@@ -342,20 +333,37 @@ public class PieceMove : MonoBehaviour
 
         Vector3 direction = targetTransform.position - selectedCaseTransform.position;
         RaycastHit[] hits = Physics.RaycastAll(selectedCaseTransform.position, direction);
-        for (int i = 0; i < hits.Length; i++)
+        List<float> distances = new List<float>();
+
+        for (int hitIndex = 0; hitIndex < hits.Length; hitIndex++)
         {
-            RaycastHit hit = hits[i];
-            ChessCase chessCase = hit.transform.GetComponent<ChessCase>();
-            if (hit.transform != selectedCaseTransform)
+            distances.Add(hits[hitIndex].distance);
+        }
+
+        distances.Sort();
+
+        int distanceIndex = 0;
+
+        for (int hitIndex = 0; hitIndex < hits.Length; hitIndex++)
+        {
+            RaycastHit hit = hits[hitIndex];
+            if (hit.distance == distances[distanceIndex])
             {
-                if (hit.transform == targetTransform)
+                ChessCase chessCase = hit.transform.GetComponent<ChessCase>();
+                if (hit.transform != selectedCaseTransform)
                 {
-                    return true;
+                    if (hit.transform == targetTransform)
+                    {
+                        return true;
+                    }
+                    if (chessCase.currentPiece != null)
+                    {
+                        return false;
+                    }
                 }
-                if (chessCase.currentPiece != null)
-                {
-                    return false;
-                }
+
+                distanceIndex++;
+                hitIndex = 0;
             }
 
         }
@@ -365,11 +373,6 @@ public class PieceMove : MonoBehaviour
 
     void MovePiece()
     {
-        ChessCase selectedChessCase = selectedCaseTransform.GetComponent<ChessCase>();
-        ChessCase targetedChessCase = targetedCaseTransform.GetComponent<ChessCase>();
-        Transform selectedPieceTransform = selectedChessCase.currentPiece;
-        Piece selectedPiece = selectedPieceTransform.GetComponent<Piece>();
-
         Vector3 startPosition = selectedChessCase.currentPiece.position;
         Vector3 destination = new Vector3(targetedCaseTransform.position.x, startPosition.y, targetedCaseTransform.position.z);
         selectedPiece.agent.SetDestination(destination);
@@ -379,9 +382,7 @@ public class PieceMove : MonoBehaviour
     void AttackPiece()
     {
         MovePiece();
-        ChessCase targetedChessCase = targetedCaseTransform.GetComponent<ChessCase>();
-        Piece targetPiece = targetedChessCase.currentPiece.GetComponent<Piece>();
-        targetPiece.Taken();
+        targetedPiece.Taken();
     }
 
     private bool IsSelected()
@@ -399,9 +400,10 @@ public class PieceMove : MonoBehaviour
     {
         if (selectedCaseTransform != null)
         {
-            ChessCase selectedChessCase = selectedCaseTransform.GetComponent<ChessCase>();
             selectedChessCase.resetMaterial();
             selectedCaseTransform = null;
+            selectedChessCase = null;
+            selectedPiece = null;
         }
 
         foreach (Transform move in possibleMoves)
@@ -416,9 +418,10 @@ public class PieceMove : MonoBehaviour
     {
         if (targetedCaseTransform != null)
         {
-            ChessCase targetChessCase = targetedCaseTransform.GetComponent<ChessCase>();
-            targetChessCase.resetMaterial();
+            targetedChessCase.resetMaterial();
             targetedCaseTransform = null;
+            targetedChessCase = null;
+            targetedPiece = null;
         }
 
         foreach (Transform attacks in possibleAttacks)

@@ -7,6 +7,7 @@ public class ChessCase : MonoBehaviour
     public Transform currentPiece;
     private Renderer renderer;
     private Material defaultMaterial;
+
     // Start is called before the first frame update
     void Start()
     {

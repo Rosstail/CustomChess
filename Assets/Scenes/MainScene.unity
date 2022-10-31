@@ -316,6 +316,7 @@ MonoBehaviour:
   infiniteMovements: []
   infiniteAttacks: []
   canJumpPieces: 0
+  canRisk: 0
   team: lights
   agent: {fileID: 0}
 --- !u!195 &125699673
@@ -465,6 +466,7 @@ MonoBehaviour:
   infiniteMovements: []
   infiniteAttacks: []
   canJumpPieces: 0
+  canRisk: 0
   team: darks
   agent: {fileID: 0}
 --- !u!195 &136242463
@@ -768,6 +770,7 @@ MonoBehaviour:
   - {x: 3, y: -1}
   infiniteAttacks: []
   canJumpPieces: 1
+  canRisk: 0
   team: darks
   agent: {fileID: 0}
 --- !u!4 &319933105 stripped
@@ -838,6 +841,7 @@ MonoBehaviour:
   - {x: -1, y: 0}
   - {x: 0, y: -1}
   canJumpPieces: 0
+  canRisk: 0
   team: darks
   agent: {fileID: 0}
 --- !u!195 &328947269
@@ -1402,6 +1406,7 @@ MonoBehaviour:
   infiniteMovements: []
   infiniteAttacks: []
   canJumpPieces: 0
+  canRisk: 1
   team: darks
   agent: {fileID: 0}
 --- !u!195 &405296708
@@ -1470,6 +1475,7 @@ MonoBehaviour:
   infiniteMovements: []
   infiniteAttacks: []
   canJumpPieces: 0
+  canRisk: 0
   team: lights
   agent: {fileID: 0}
 --- !u!195 &428760558
@@ -2963,6 +2969,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedCaseTransform: {fileID: 0}
   targetedCaseTransform: {fileID: 0}
+  selectedChessCase: {fileID: 0}
+  targetedChessCase: {fileID: 0}
+  selectedPiece: {fileID: 0}
+  targetedPiece: {fileID: 0}
   layerMask: -129
   selectedPieceMaterial: {fileID: 2100000, guid: 6d002a1f6b8f6a0488f847078b8879d7, type: 2}
   possibleMoveMaterial: {fileID: 2100000, guid: 260687e6bce28ee41ab79c3ee18e68d9, type: 2}
@@ -3396,6 +3406,7 @@ MonoBehaviour:
   - {x: 0, y: -1}
   - {x: 1, y: -1}
   canJumpPieces: 0
+  canRisk: 0
   team: darks
   agent: {fileID: 0}
 --- !u!195 &833088326
@@ -3865,6 +3876,7 @@ MonoBehaviour:
   - {x: 3, y: -1}
   infiniteAttacks: []
   canJumpPieces: 1
+  canRisk: 0
   team: lights
   agent: {fileID: 0}
 --- !u!4 &981106702 stripped
@@ -4426,6 +4438,7 @@ MonoBehaviour:
   - {x: 0, y: -1}
   - {x: 1, y: -1}
   canJumpPieces: 0
+  canRisk: 0
   team: lights
   agent: {fileID: 0}
 --- !u!195 &1141524701
@@ -4985,6 +4998,7 @@ MonoBehaviour:
   infiniteMovements: []
   infiniteAttacks: []
   canJumpPieces: 0
+  canRisk: 0
   team: darks
   agent: {fileID: 0}
 --- !u!195 &1386496467
@@ -5843,6 +5857,7 @@ MonoBehaviour:
   - {x: -1, y: 0}
   - {x: 0, y: -1}
   canJumpPieces: 0
+  canRisk: 0
   team: lights
   agent: {fileID: 0}
 --- !u!195 &1554962280
@@ -7423,6 +7438,7 @@ MonoBehaviour:
   infiniteMovements: []
   infiniteAttacks: []
   canJumpPieces: 1
+  canRisk: 0
   team: lights
   agent: {fileID: 0}
 --- !u!195 &1857393401
@@ -8234,6 +8250,7 @@ MonoBehaviour:
   infiniteMovements: []
   infiniteAttacks: []
   canJumpPieces: 0
+  canRisk: 1
   team: lights
   agent: {fileID: 0}
 --- !u!195 &2025262478
@@ -8315,6 +8332,7 @@ MonoBehaviour:
   infiniteMovements: []
   infiniteAttacks: []
   canJumpPieces: 1
+  canRisk: 0
   team: darks
   agent: {fileID: 0}
 --- !u!195 &2026138091
