@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class ChessCase : MonoBehaviour
 {
-    public Transform currentPiece;
+    public static PieceMove pieceMove;
+    public Transform currentPieceTransform;
+    public Piece currentPiece;
     private Renderer renderer;
     private Material defaultMaterial;
 
     // Start is called before the first frame update
     void Start()
     {
+        pieceMove = GameObject.Find("/GameManager").GetComponent<PieceMove>();
         renderer = GetComponent<Renderer>();
         defaultMaterial = renderer.material;
         CheckPieceTransform();
@@ -39,7 +42,18 @@ public class ChessCase : MonoBehaviour
             }
         }
 
-        currentPiece = newPiece;
+        currentPieceTransform = newPiece;
+        if (currentPieceTransform != null)
+        {
+            currentPiece = currentPieceTransform.GetComponent<Piece>();
+            currentPiece.chessCase = this;
+            currentPiece.possibleMoves = new List<Transform>();
+            currentPiece.possibleAttacks = new List<Transform>();
+            pieceMove.CheckPossibleMoves(currentPiece);
+            pieceMove.CheckPossibleAttacks(currentPiece);
+
+            currentPiece.isChecked = (!currentPiece.canRisk && pieceMove.CheckRisk(currentPiece, transform));
+        }
     }
 
     public void setMaterial(Material material)

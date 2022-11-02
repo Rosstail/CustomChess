@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &125699667 stripped
 GameObject:
@@ -308,6 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements:
   - {x: -1, y: 0}
   simpleAttacks:
@@ -317,8 +319,11 @@ MonoBehaviour:
   infiniteAttacks: []
   canJumpPieces: 0
   canRisk: 1
+  isChecked: 0
   team: lights
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!195 &125699673
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -458,6 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements:
   - {x: 1, y: 0}
   simpleAttacks:
@@ -467,8 +473,11 @@ MonoBehaviour:
   infiniteAttacks: []
   canJumpPieces: 0
   canRisk: 1
+  isChecked: 0
   team: darks
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!195 &136242463
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -640,6 +649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1001 &319933099
 PrefabInstance:
@@ -757,6 +767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements: []
   simpleAttacks: []
   infiniteMovements:
@@ -771,8 +782,11 @@ MonoBehaviour:
   infiniteAttacks: []
   canJumpPieces: 1
   canRisk: 1
+  isChecked: 0
   team: darks
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!4 &319933105 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4207701621693582, guid: f005021ceced8b240983e71a3d481180, type: 3}
@@ -828,6 +842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements: []
   simpleAttacks: []
   infiniteMovements:
@@ -842,8 +857,11 @@ MonoBehaviour:
   - {x: 0, y: -1}
   canJumpPieces: 0
   canRisk: 1
+  isChecked: 0
   team: darks
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!195 &328947269
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -976,6 +994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &378255701
 GameObject:
@@ -1087,6 +1106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &386294637
 GameObject:
@@ -1198,6 +1218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &398645532
 GameObject:
@@ -1233,10 +1254,10 @@ RectTransform:
   m_Father: {fileID: 1773032331}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 264.5}
-  m_SizeDelta: {x: 500, y: 50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 9, y: 163}
+  m_SizeDelta: {x: 400, y: -50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &398645534
 MonoBehaviour:
@@ -1285,8 +1306,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1385,6 +1406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements:
   - {x: 1, y: 0}
   - {x: 1, y: 1}
@@ -1407,8 +1429,11 @@ MonoBehaviour:
   infiniteAttacks: []
   canJumpPieces: 0
   canRisk: 0
+  isChecked: 0
   team: darks
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!195 &405296708
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1467,6 +1492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements:
   - {x: -1, y: 0}
   simpleAttacks:
@@ -1476,8 +1502,11 @@ MonoBehaviour:
   infiniteAttacks: []
   canJumpPieces: 0
   canRisk: 1
+  isChecked: 0
   team: lights
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!195 &428760558
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1610,6 +1639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1001 &445044630
 PrefabInstance:
@@ -1727,7 +1757,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 601, y: 0}
+  m_AnchoredPosition: {x: 335, y: 0}
   m_SizeDelta: {x: 200, y: 580}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &447092050
@@ -1875,6 +1905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1001 &534744364
 PrefabInstance:
@@ -1993,7 +2024,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -601, y: 0}
+  m_AnchoredPosition: {x: -335, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &537053529
@@ -2016,7 +2047,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Lights: %lightPawnsLeft%'
+  m_text: 'Lights: %lightPawnsLeft%
+
+    %lightStatus%'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2043,8 +2076,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2217,6 +2250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &543133371
 GameObject:
@@ -2698,6 +2732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &691085309
 GameObject:
@@ -2809,6 +2844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
@@ -2934,10 +2970,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73841b1f9990dc24da6f022a2173de03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turn: 0
+  turn: 1
   whoPlays: lights
+  winner: 
   lightPawns: {fileID: 1502992412}
   darkPawns: {fileID: 1381882754}
+  placeHoldersManager: {fileID: 1985811499}
   lightPawnsCount: 0
   darkPawnsCount: 0
 --- !u!4 &710929337
@@ -3087,6 +3125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &784500501
 GameObject:
@@ -3198,6 +3237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &792594781
 GameObject:
@@ -3235,7 +3275,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 601, y: 0}
+  m_AnchoredPosition: {x: 335, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &792594783
@@ -3258,7 +3298,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '%darkPawnsLeft% :Darks'
+  m_text: '%darkPawnsLeft% :Darks
+
+    %darkStatus%'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3285,8 +3327,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3385,6 +3427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements: []
   simpleAttacks: []
   infiniteMovements:
@@ -3407,8 +3450,11 @@ MonoBehaviour:
   - {x: 1, y: -1}
   canJumpPieces: 0
   canRisk: 1
+  isChecked: 0
   team: darks
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!195 &833088326
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3662,6 +3708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
@@ -3863,6 +3910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements: []
   simpleAttacks: []
   infiniteMovements:
@@ -3877,8 +3925,11 @@ MonoBehaviour:
   infiniteAttacks: []
   canJumpPieces: 1
   canRisk: 1
+  isChecked: 0
   team: lights
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!4 &981106702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4626390214331530, guid: 1c0f2faf14460a5478057fd4e0575576, type: 3}
@@ -4008,6 +4059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1047422828
 GameObject:
@@ -4119,6 +4171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1102860311
 GameObject:
@@ -4230,6 +4283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1105857361
 GameObject:
@@ -4341,6 +4395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1123980721
 GameObject:
@@ -4417,6 +4472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements: []
   simpleAttacks: []
   infiniteMovements:
@@ -4439,8 +4495,11 @@ MonoBehaviour:
   - {x: 1, y: -1}
   canJumpPieces: 0
   canRisk: 1
+  isChecked: 0
   team: lights
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!195 &1141524701
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4612,6 +4671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1001 &1176846028
 PrefabInstance:
@@ -4804,6 +4864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1341037232
 GameObject:
@@ -4915,6 +4976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1381882754
 GameObject:
@@ -4990,6 +5052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements:
   - {x: 1, y: 0}
   simpleAttacks:
@@ -4999,8 +5062,11 @@ MonoBehaviour:
   infiniteAttacks: []
   canJumpPieces: 0
   canRisk: 1
+  isChecked: 0
   team: darks
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!195 &1386496467
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5133,6 +5199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1435669699
 GameObject:
@@ -5244,6 +5311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1458819580
 GameObject:
@@ -5355,6 +5423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1472146630
 GameObject:
@@ -5466,6 +5535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1001 &1482508962
 PrefabInstance:
@@ -5696,6 +5766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1517592815
 GameObject:
@@ -5807,6 +5878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1554962274 stripped
 GameObject:
@@ -5844,6 +5916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements: []
   simpleAttacks: []
   infiniteMovements:
@@ -5858,8 +5931,11 @@ MonoBehaviour:
   - {x: 0, y: -1}
   canJumpPieces: 0
   canRisk: 1
+  isChecked: 0
   team: lights
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!195 &1554962280
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6060,6 +6136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1599282423
 GameObject:
@@ -6171,6 +6248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1599283591
 GameObject:
@@ -6282,6 +6360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1684631708
 GameObject:
@@ -6393,6 +6472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1696217755
 GameObject:
@@ -6504,6 +6584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1707659913
 GameObject:
@@ -6615,6 +6696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1723950594
 GameObject:
@@ -6726,6 +6808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1729462879
 GameObject:
@@ -6837,6 +6920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1001 &1755655034
 PrefabInstance:
@@ -7269,6 +7353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1856349663
 GameObject:
@@ -7380,6 +7465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1857393395 stripped
 GameObject:
@@ -7417,6 +7503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements:
   - {x: 2, y: 1}
   - {x: 1, y: 2}
@@ -7439,8 +7526,11 @@ MonoBehaviour:
   infiniteAttacks: []
   canJumpPieces: 1
   canRisk: 1
+  isChecked: 0
   team: lights
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!195 &1857393401
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7498,7 +7588,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -601, y: 0}
+  m_AnchoredPosition: {x: -335, y: 0}
   m_SizeDelta: {x: 200, y: 580}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1873022015
@@ -7646,6 +7736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1954773925
 GameObject:
@@ -7757,6 +7848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1975182023
 GameObject:
@@ -7868,6 +7960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &1985811494
 GameObject:
@@ -7881,6 +7974,7 @@ GameObject:
   - component: {fileID: 1985811497}
   - component: {fileID: 1985811496}
   - component: {fileID: 1985811495}
+  - component: {fileID: 1985811499}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -7971,6 +8065,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1985811499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985811494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9625f203f00e5ff40b1eeb31473ffd51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placeHolderTransforms:
+  - {fileID: 398645533}
+  - {fileID: 537053528}
+  - {fileID: 792594782}
 --- !u!1 &1996355480
 GameObject:
   m_ObjectHideFlags: 0
@@ -8081,6 +8191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &2013512910
 GameObject:
@@ -8192,6 +8303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &2025262472 stripped
 GameObject:
@@ -8229,6 +8341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements:
   - {x: 1, y: 0}
   - {x: 1, y: 1}
@@ -8251,8 +8364,11 @@ MonoBehaviour:
   infiniteAttacks: []
   canJumpPieces: 0
   canRisk: 0
+  isChecked: 0
   team: lights
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!195 &2025262478
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8311,6 +8427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62b217c173237348bace6bf088fa465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chessCase: {fileID: 0}
   simpleMovements:
   - {x: 2, y: 1}
   - {x: 1, y: 2}
@@ -8333,8 +8450,11 @@ MonoBehaviour:
   infiniteAttacks: []
   canJumpPieces: 1
   canRisk: 1
+  isChecked: 0
   team: darks
   agent: {fileID: 0}
+  possibleMoves: []
+  possibleAttacks: []
 --- !u!195 &2026138091
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8467,6 +8587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &2091455650
 GameObject:
@@ -8578,6 +8699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1001 &2093517763
 PrefabInstance:
@@ -8770,6 +8892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &2125108782
 GameObject:
@@ -8881,6 +9004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &2126254951
 GameObject:
@@ -8992,6 +9116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &2127928711
 GameObject:
@@ -9103,6 +9228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
 --- !u!1 &2138257730
 GameObject:
@@ -9214,4 +9340,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111cae3d7c7b35b4fb12f5f634ed9025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPieceTransform: {fileID: 0}
   currentPiece: {fileID: 0}
