@@ -18,6 +18,8 @@ public class PieceMove : MonoBehaviour
     public Piece targetedPiece;
 
     public int layerMask = ~(1 << 7);
+
+    public bool canSelect = true;
     private Game game;
 
     [SerializeField] public Material selectedPieceMaterial;
@@ -51,6 +53,10 @@ public class PieceMove : MonoBehaviour
 
     void ChessCaseSelect(Transform chessCaseTransform)
     {
+        if (!canSelect)
+        {
+            return;
+        }
         ChessCase chessCase = chessCaseTransform.GetComponent<ChessCase>();
         if (!IsSelected())
         {
@@ -405,6 +411,7 @@ public class PieceMove : MonoBehaviour
     IEnumerator Move(Piece piece, Vector3 destination)
     {
         bool value = true;
+        canSelect = false;
         piece.agent.SetDestination(destination);
         while (value)
         {
@@ -415,6 +422,7 @@ public class PieceMove : MonoBehaviour
                 {
                     if (!piece.agent.hasPath || piece.agent.velocity.sqrMagnitude == 0f)
                     {
+                        canSelect = true;
                         game.SwitchTeam();
                         game.CheckGameStatus();
                         value = false;
