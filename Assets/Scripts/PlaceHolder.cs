@@ -10,10 +10,13 @@ public class PlaceHolder : MonoBehaviour
     [SerializeField] public TextMeshProUGUI textField;
     string defaultText;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         defaultText = textField.text;
-        Display();
+    }
+
+    private void Start()
+    {
     }
 
     // Update is called once per frame
@@ -24,11 +27,6 @@ public class PlaceHolder : MonoBehaviour
     public void Display()
     {
         string movementText = defaultText;
-        if (movementText == null)
-        {
-            Debug.LogWarning("Start() did not happen yet in " + name);
-            return;
-        }
 
         movementText = 
             movementText.Replace("%turnCount%",
