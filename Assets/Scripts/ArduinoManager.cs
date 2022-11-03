@@ -5,8 +5,8 @@ using System.IO.Ports;
 
 public class ArduinoManager : MonoBehaviour
 {
-    [SerializeField] public string portName = "COM7";
-    [SerializeField] public int portNumber = 19200;
+    [SerializeField] public string portName = "COM6";
+    [SerializeField] public int portNumber = 9600;
     [SerializeField] public float caseLength = 4000; //Dist in cm
     [SerializeField] public float motorValuePerCase = 16000;
     SerialPort dataStream;
@@ -14,7 +14,7 @@ public class ArduinoManager : MonoBehaviour
 
     private void Awake()
     {
-        SerialPort dataStream = new SerialPort(portName, portNumber);
+        dataStream = new SerialPort(portName, portNumber, Parity.None, 8, StopBits.One);
     }
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,7 @@ public class ArduinoManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        try
+        /*try
         {
             receivedString = dataStream.ReadLine();
 
@@ -45,7 +45,7 @@ public class ArduinoManager : MonoBehaviour
         } catch
         {
             Debug.Log("Update.");
-        }
+        }*/
     }
 
     public void MoveArms(Vector3 distances)

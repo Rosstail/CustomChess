@@ -3029,7 +3029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b3c0d5ee09a1c4e8222348ad348aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portName: /dev/cu.usbmodem144101
+  portName: COM6
   portNumber: 9600
   caseLength: 4000
   motorValuePerCase: 16000
