@@ -2951,6 +2951,7 @@ GameObject:
   - component: {fileID: 710929337}
   - component: {fileID: 710929336}
   - component: {fileID: 710929338}
+  - component: {fileID: 710929339}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3012,9 +3013,26 @@ MonoBehaviour:
   selectedPiece: {fileID: 0}
   targetedPiece: {fileID: 0}
   layerMask: -129
+  canSelect: 1
   selectedPieceMaterial: {fileID: 2100000, guid: 6d002a1f6b8f6a0488f847078b8879d7, type: 2}
   possibleMoveMaterial: {fileID: 2100000, guid: 260687e6bce28ee41ab79c3ee18e68d9, type: 2}
   possibleAttackMaterial: {fileID: 2100000, guid: cfc5dfe979c120348bc11fa820601a8b, type: 2}
+--- !u!114 &710929339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710929335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6b3c0d5ee09a1c4e8222348ad348aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portName: /dev/cu.usbmodem144101
+  portNumber: 9600
+  caseLength: 4000
+  motorValuePerCase: 16000
 --- !u!1 &777121713
 GameObject:
   m_ObjectHideFlags: 0

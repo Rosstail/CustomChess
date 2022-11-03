@@ -19,27 +19,45 @@ public class ArduinoManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dataStream.Open();
+        try
+        {
+            dataStream.Open();
+        } catch
+        {
+            Debug.Log("Datastream failed to open");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        receivedString = dataStream.ReadLine();
-
-        string[] data = receivedString.Split(',');
-        
-        foreach (string text in data)
+        try
         {
-            Debug.Log(text);
+            receivedString = dataStream.ReadLine();
+
+            string[] data = receivedString.Split(',');
+
+            foreach (string text in data)
+            {
+                Debug.Log(text);
+            }
+            Debug.Log("___");
+        } catch
+        {
+            Debug.Log("Update.");
         }
-        Debug.Log("___");
     }
 
     public void MoveArms(Vector3 distances)
     {
         string value = distances.x + "," + distances.z;
         Debug.Log(value);
-        dataStream.Write(value);
+        try
+        {
+            dataStream.Write(value);
+        } catch
+        {
+            Debug.LogError("Problem with Datastream on move");
+        }
     }
 }
