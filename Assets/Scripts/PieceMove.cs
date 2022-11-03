@@ -21,6 +21,7 @@ public class PieceMove : MonoBehaviour
 
     public bool canSelect = true;
     private Game game;
+    private ArduinoManager arduinoManager;
 
     [SerializeField] public Material selectedPieceMaterial;
     [SerializeField] public Material possibleMoveMaterial;
@@ -30,6 +31,7 @@ public class PieceMove : MonoBehaviour
     void Start()
     {
         game = GetComponent<Game>();
+        arduinoManager = GetComponent<ArduinoManager>();
     }
 
     // Update is called once per frame
@@ -405,6 +407,8 @@ public class PieceMove : MonoBehaviour
     {
         Vector3 startPosition = selectedPiece.transform.position;
         Vector3 destination = new Vector3(targetedCaseTransform.position.x, startPosition.y, targetedCaseTransform.position.z);
+        Vector3 distances = targetedCaseTransform.position - selectedPiece.transform.localPosition;
+        arduinoManager.MoveArms(distances);
         StartCoroutine(Move(selectedPiece, destination));
     }
 
