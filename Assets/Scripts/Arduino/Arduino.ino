@@ -16,6 +16,7 @@ void loop() {
   // put your main code here, to run repeatedly:
   String str = Serial.readString();
   if (str != "") {
+    Serial.print(str);
     if (str == "RESET") {
       ResetSteppers();
     } else if (str == "ON") {
@@ -43,6 +44,7 @@ void loop() {
       StepperY(stepperYVal);
     }
   }
+  delay(1000);
 }
 
 void stepper(Stepper stepp) {
@@ -56,8 +58,8 @@ void stepper(Stepper stepp) {
 void ResetSteppers() {
   Serial.println("RESET EN COURS");
    //Stucks in corner, a bit outside
-  StepperX(-100000);
-  StepperY(-100000);
+  StepperX(300000);
+  StepperY(-300000);
    //Put on default pos
 }
 

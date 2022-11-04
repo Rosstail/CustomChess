@@ -410,7 +410,7 @@ public class PieceMove : MonoBehaviour
         //Vector3 distances = targetedCaseTransform.position - selectedPiece.transform.localPosition;
         Vector2 distances = new Vector2(targetedCaseTransform.localPosition.x, targetedCaseTransform.localPosition.z);
         StartCoroutine(Move(selectedPiece, destination));
-        arduinoManager.MoveArms(Vector2.zero, distances);
+        arduinoManager.MoveArms(new Vector2(startPosition.x + 3.5f, startPosition.z + 2.5f), distances);
     }
 
     IEnumerator Move(Piece piece, Vector3 destination)

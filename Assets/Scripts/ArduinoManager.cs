@@ -24,14 +24,29 @@ public class ArduinoManager : MonoBehaviour
         try
         {
             dataStream.Open();
-            dataStream.Write("OFF");
-            dataStream.Write("RESET");
         } catch (IOException e)
         {
             Debug.LogError(e);
             Debug.Log("Datastream failed to open");
+        } finally
+        {
+            Debug.Log("is dataStream open ? " + dataStream.IsOpen);
+            if (dataStream.IsOpen)
+            {
+                string[] orders = { "OFF", "RESET" };
+                StartCoroutine(Waiter(1, orders));
+            }
         }
-        Debug.Log("is dataStream open ? " + dataStream.IsOpen);
+    }
+
+    IEnumerator Waiter(float waitTime, string[] orders)
+    {
+        foreach (string order in orders) {
+            Debug.Log("sent order " + order);
+            dataStream.Write(order);
+            yield return new WaitForSecondsRealtime(waitTime);
+        }
+
     }
 
     // Update is called once per frame
@@ -43,16 +58,18 @@ public class ArduinoManager : MonoBehaviour
     {
         string originValue = origin.x + ";" + origin.y;
         string targetValue = (target.x - origin.x) + ";" + (target.y - origin.y);
-        Debug.Log(targetValue);
         try
         {
-            dataStream.Write(originValue);
-            dataStream.Write("ON");
-            dataStream.Write("0.5;0.5"); //Offset while holding piece
-            dataStream.Write(targetValue);
-            dataStream.Write("-0.5;-0.5"); //Offset while holding piece
-            dataStream.Write("OFF");
-            dataStream.Write("RESET");
+            string[] orders = {
+                originValue,
+                "ON",
+                "0.5;0.5",
+                targetValue,
+                "-0.5;-0.5",
+                "OFF",
+                "RESET"
+            };
+            StartCoroutine(Waiter(1, orders));
         } catch
         {
             Debug.LogError("Problem with Datastream on move");
