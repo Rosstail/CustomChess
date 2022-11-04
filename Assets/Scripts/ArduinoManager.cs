@@ -34,7 +34,7 @@ public class ArduinoManager : MonoBehaviour
             if (dataStream.IsOpen)
             {
                 string[] orders = { "OFF", "RESET" };
-                StartCoroutine(Waiter(1, orders));
+                StartCoroutine(Waiter(10, orders));
             }
         }
     }
@@ -63,13 +63,13 @@ public class ArduinoManager : MonoBehaviour
             string[] orders = {
                 originValue,
                 "ON",
-                "0.5;0.5",
+                "-0.5;0.5",
                 targetValue,
-                "-0.5;-0.5",
+                "0.5;-0.5",
                 "OFF",
                 "RESET"
             };
-            StartCoroutine(Waiter(1, orders));
+            StartCoroutine(Waiter(10, orders));
         } catch
         {
             Debug.LogError("Problem with Datastream on move");

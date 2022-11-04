@@ -2972,7 +2972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turn: 1
-  whoPlays: lights
+  whoPlays: darks
   winner: 
   lightPawns: {fileID: 1502992412}
   darkPawns: {fileID: 1381882754}

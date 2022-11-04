@@ -32,7 +32,7 @@ void loop() {
 
       int stepperXVal = 0;
       int stepperYVal = 0;
-      stepperXVal = subFirst.toFloat() * 1000 * 17; //Directions are capricious. set positive or negative if needed
+      stepperXVal = subFirst.toFloat() * 1000 * (-17); //Directions are capricious. set positive or negative if needed
       stepperYVal = subLast.toFloat() * 1000 * (-17);
 
       Serial.println("First");
