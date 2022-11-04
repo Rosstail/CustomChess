@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO.Ports;
+using Newtonsoft.Json;
+using System.IO;
 
 public class ArduinoManager : MonoBehaviour
 {
     [SerializeField] public string portName = "COM6";
     [SerializeField] public int portNumber = 9600;
-    [SerializeField] public float caseLength = 4000; //Dist in cm
-    [SerializeField] public float motorValuePerCase = 16000;
+    [SerializeField] public float caseLength = 4.0f; //Dist in cm
+    [SerializeField] public float motorValuePerCase = 1000;
     SerialPort dataStream;
     private string receivedString;
 
@@ -22,39 +24,35 @@ public class ArduinoManager : MonoBehaviour
         try
         {
             dataStream.Open();
-        } catch
+            dataStream.Write("OFF");
+            dataStream.Write("RESET");
+        } catch (IOException e)
         {
+            Debug.LogError(e);
             Debug.Log("Datastream failed to open");
         }
+        Debug.Log("is dataStream open ? " + dataStream.IsOpen);
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*try
-        {
-            receivedString = dataStream.ReadLine();
-
-            string[] data = receivedString.Split(',');
-
-            foreach (string text in data)
-            {
-                Debug.Log(text);
-            }
-            Debug.Log("___");
-        } catch
-        {
-            Debug.Log("Update.");
-        }*/
     }
 
-    public void MoveArms(Vector3 distances)
+    public void MoveArms(Vector2 origin, Vector2 target)
     {
-        string value = distances.x + "," + distances.z;
-        Debug.Log(value);
+        string originValue = origin.x + ";" + origin.y;
+        string targetValue = (target.x - origin.x) + ";" + (target.y - origin.y);
+        Debug.Log(targetValue);
         try
         {
-            dataStream.Write(value);
+            dataStream.Write(originValue);
+            dataStream.Write("ON");
+            dataStream.Write("0.5;0.5"); //Offset while holding piece
+            dataStream.Write(targetValue);
+            dataStream.Write("-0.5;-0.5"); //Offset while holding piece
+            dataStream.Write("OFF");
+            dataStream.Write("RESET");
         } catch
         {
             Debug.LogError("Problem with Datastream on move");
