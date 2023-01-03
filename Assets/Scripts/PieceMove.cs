@@ -405,12 +405,17 @@ public class PieceMove : MonoBehaviour
 
     void MovePiece()
     {
-        Vector3 startPosition = selectedPiece.transform.position;
+        Vector3 startPosition = selectedPiece.chessCase.transform.position;
+        Vector3 startLocalPosition = selectedPiece.chessCase.transform.localPosition;
+        Vector2 localStartPositionV2 = new Vector2(startLocalPosition.z + 3.5f, startLocalPosition.x + 2.5f);
+
+        Debug.Log("Local position v2 " + localStartPositionV2);
+
         Vector3 destination = new Vector3(targetedCaseTransform.position.x, startPosition.y, targetedCaseTransform.position.z);
-        //Vector3 distances = targetedCaseTransform.position - selectedPiece.transform.localPosition;
-        Vector2 distances = new Vector2(targetedCaseTransform.localPosition.x, targetedCaseTransform.localPosition.z);
+
+        Vector2 distances = new Vector2(targetedCaseTransform.localPosition.z + 3.5f, targetedCaseTransform.localPosition.x + 2.5f);
         StartCoroutine(Move(selectedPiece, destination));
-        arduinoManager.MoveArms(new Vector2(startPosition.x + 3.5f, startPosition.z + 2.5f), distances);
+        arduinoManager.MoveArms(localStartPositionV2, distances);
     }
 
     IEnumerator Move(Piece piece, Vector3 destination)

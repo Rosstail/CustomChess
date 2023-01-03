@@ -58,14 +58,15 @@ public class ArduinoManager : MonoBehaviour
     {
         string originValue = origin.x + ";" + origin.y;
         string targetValue = (target.x - origin.x) + ";" + (target.y - origin.y);
+        Debug.Log("Target value distance" + targetValue);
         try
         {
             string[] orders = {
                 originValue,
                 "ON",
-                "-0.5;0.5",
+                "0.5;0.5",
                 targetValue,
-                "0.5;-0.5",
+                "-0.5;-0.5",
                 "OFF",
                 "RESET"
             };
